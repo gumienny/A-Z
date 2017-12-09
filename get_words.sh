@@ -1,5 +1,5 @@
 #!/bin/bash
-cat series1/* series2/* |
+cat $@ |
 grep -v '^[0-9]' |
 sed 's/[?!.|]/ /g' |
 sed 's/ * / /g' |
@@ -12,4 +12,16 @@ sort |
 uniq |
 sort |
 sed -e 's/^[\t]*//' |
-tee all_words.txt
+cat > __words.txt
+
+words=`cat __words.txt`
+
+touch __filtered.txt
+
+for i in $words; do
+	echo -n "$i "
+	read
+	if [[ "$REPLY" == *"1"* ]]; then
+		echo -e "$i\r\n" >> __filtered.txt
+	fi
+done
