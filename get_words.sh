@@ -1,4 +1,8 @@
 #!/bin/bash
+hash=$RANDOM
+output_words="__words.$hash.txt"
+output_filtered="__filtered.$hash.txt"
+
 cat $@ |
 grep -v '^[0-9]' |
 sed 's/[?!.|]/ /g' |
@@ -12,16 +16,15 @@ sort |
 uniq |
 sort |
 sed -e 's/^[\t]*//' |
-cat > __words.txt
+cat > "$output_words"
 
-words=`cat __words.txt`
-
-touch __filtered.txt
+words=`cat "$output_words"`
+touch "$output_filtered"
 
 for i in $words; do
 	echo -n "$i "
 	read
 	if [[ "$REPLY" == *"1"* ]]; then
-		echo -e "$i\r\n" >> __filtered.txt
+		echo -e "$i\r\n" >> "$output_filtered"
 	fi
 done
