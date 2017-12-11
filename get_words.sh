@@ -12,9 +12,7 @@ sed 's/^ //g' |
 sed 's/ /\n/g' |
 sed '/^$/d' |
 sed -e 's/\(.*\)/\L\1/' |
-sort |
-uniq |
-sort |
+sort -u |
 sed -e 's/^[\t]*//' |
 cat > "$output_words"
 
